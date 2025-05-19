@@ -7,27 +7,25 @@ from torch.nn.functional import softmax
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import requests
 import praw
+import os
 
 # ========== CONFIGURAZIONE ==========
 # Telegram bot
-BOT_TOKEN = "7257965363:AAG3moxIMxrge1v49YzTQ9MrDFFYUFAzHzc"
-CHAT_ID = "995803575"
-
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+CHAT_ID = os.getenv("CHAT_ID")
 #TWITTER
-TWITTER_BEARER_TOKEN = "AAAAAAAAAAAAAAAAAAAAAOxb1wEAAAAAWSFpHnu4KhR%2Bx5oqMiHoEnQzsn8%3DKFCikTZHpo56XynKyZFIMAYV9G59NZbxWpuMXjhr1euktBvIu6"
-
-#NEWAPI
-NEWS_API_KEY = "c11008b9a27941a0a9fc44ef251f2442"
-
+TWITTER_BEARER_TOKEN = os.getenv("BEARER_TOKEN")
 # Reddit
-REDDIT_CLIENT_ID = "tv31rlX-jWi-3JgfMT3NJw"
-REDDIT_CLIENT_SECRET = "oLvQBlPeLE08DPNG1Zc5SuTr-4jqdQ"
-REDDIT_USER_AGENT = "sentiment-bot by /u/NADIA_reddit"
+REDDIT_CLIENT_ID = os.getenv("REDDIT_CLIENT_ID")
+REDDIT_CLIENT_SECRET = os.getenv("REDDIT_CLIENT_SECRET")
+REDDIT_USER_AGENT = os.getenv("REDDIT_USER_AGENT")
+#NEWAPI
 
+NEWS_API_KEY = os.getenv("NEWS_API_KEY")
 
 # Tickers
-#TICKERS = ["TSLA", "AAPL", "NVDA", "MSFT","SNAP","GOOG","AMZN","META","PST.MI","ALTR"]
-TICKERS = ["TSLA"]
+TICKERS = ["TSLA", "AAPL", "NVDA", "MSFT","SNAP","GOOG","AMZN","META","PST.MI","ALTR"]
+#TICKERS = ["TSLA"]
 
 
 #PESI
