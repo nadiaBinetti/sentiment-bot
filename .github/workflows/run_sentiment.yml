@@ -28,7 +28,7 @@ jobs:
         pip install -r requirements.txt
 
     - name: Esegui lo script di analisi
-      run: python nome_del_tuo_script.py # SOSTITUISCI con il nome effettivo del tuo file .py
+      run: python sentiment_bot3.py # SOSTITUISCI con il nome effettivo del tuo file .py
       env:
         # Mappa i tuoi GitHub Secrets alle variabili d'ambiente
         # Il nome a sinistra è quello che usi in os.environ.get()
