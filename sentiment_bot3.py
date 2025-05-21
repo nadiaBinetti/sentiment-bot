@@ -164,7 +164,7 @@ def combine_sentiments(news_sentiment, twitter_results, stocktwits_results, redd
 
 if __name__ == "__main__":
     full_report = "📊 Verdetto Giornaliero:\n\n"
-    print("BOT_TOKEN", BOT_TOKEN)
+    print(f"BOT_TOKEN", BOT_TOKEN)
     for ticker in TICKERS:
         print(f"Analizzando {ticker}...")
 
