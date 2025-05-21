@@ -6,7 +6,7 @@ on:
     # Puoi personalizzare il cron job come preferisci.
     # Formato CRON: minuto ora giorno_del_mese mese giorno_della_settimana
     # Vedi https://crontab.guru per aiuto con la sintassi cron
-    - cron: '0 7 * * *'
+    - cron: '0 */4 * * *'
   workflow_dispatch: # Permette di eseguire il workflow manualmente dalla tab "Actions" di GitHub
 
 jobs:
