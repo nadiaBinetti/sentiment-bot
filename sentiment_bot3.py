@@ -12,6 +12,7 @@ import os
 # ========== CONFIGURAZIONE ==========
 # Telegram bot
 BOT_TOKEN = os.getenv("BOT_TOKEN")
+print("BOT_TOKEN", BOT_TOKEN)
 CHAT_ID = os.getenv("CHAT_ID")
 #TWITTER
 TWITTER_BEARER_TOKEN = os.getenv("BEARER_TOKEN")
