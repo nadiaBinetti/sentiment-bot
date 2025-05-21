@@ -24,7 +24,7 @@ REDDIT_USER_AGENT = os.getenv("REDDIT_USER_AGENT")
 NEWS_API_KEY = os.getenv("NEWS_API_KEY")
 
 # Tickers
-TICKERS = ["TSLA", "AAPL", "NVDA", "MSFT","SNAP","GOOG","AMZN","META","PST.MI","ALTR"]
+TICKERS = ["AAPL", "NVDA", "MSFT","SNAP","GOOG","AMZN","META","PST.MI","KO"]
 #TICKERS = ["TSLA"]
 
 
@@ -194,3 +194,59 @@ if __name__ == "__main__":
 
     print(full_report)
     send_telegram_message(full_report)
+    
+    
+    # ======= TRENDING TICKERS AGGIUNTIVI =======
+
+    def get_trending_tickers_stocktwits(limit=10):
+        url = "https://api.stocktwits.com/api/2/trending/symbols.json"
+        try:
+            headers = {"User-Agent": "Mozilla/5.0 (compatible; sentiment-bot/1.0)"}
+            response = requests.get(url, headers=headers)
+            if response.status_code != 200:
+                print(f"Errore StockTwits API trending: HTTP {response.status_code}")
+                return []
+            data = response.json()
+            symbols = data.get("symbols", [])
+            # Escludi crypto
+            filtered_symbols = [s["symbol"] for s in symbols if s.get("exchange") != "CRYPTO"]
+            return filtered_symbols[:10]  # Limita ai primi 10 trending non-crypto
+        except Exception as e:
+            print(f"Errore nel recupero trending da StockTwits: {e}")
+            return []
+
+    # Analisi dei trending ticker
+    trending_report = "🔥 Titoli più chiacchierati ora:\n\n"
+    TRENDING_TICKERS = get_trending_tickers_stocktwits(limit=5)
+
+    for ticker in TRENDING_TICKERS:
+        print(f"[TRENDING] Analizzando {ticker}...")
+
+        news_articles = get_latest_news(ticker)
+        news_text = " ".join(news_articles) if news_articles else "No recent news."
+        news_sentiment = analyze_news_sentiment(news_text)
+
+        twitter_posts = get_twitter_posts(ticker)
+        twitter_results = analyze_social_sentiment(twitter_posts) if twitter_posts else []
+
+        stocktwits_posts = get_stocktwits_posts(ticker)
+        stocktwits_results = analyze_social_sentiment(stocktwits_posts) if stocktwits_posts else []
+
+        reddit_posts = get_reddit_posts(ticker)
+        reddit_results = analyze_social_sentiment(reddit_posts) if reddit_posts else []
+
+        final_verdict = combine_sentiments(news_sentiment, twitter_results, stocktwits_results, reddit_results)
+
+        report = (
+            f"📈 {ticker}\n"
+            f"📰 News: {news_sentiment}\n"
+            f"🐦 Twitter: {[r[1] for r in twitter_results]}\n"
+            f"📊 StockTwits: {[r[1] for r in stocktwits_results]}\n"
+            f"👽 Reddit: {[r[1] for r in reddit_results]}\n"
+            f"✅ Verdetto: {final_verdict}\n\n"
+        )
+        trending_report += report
+
+    send_telegram_message(trending_report)
+
+
