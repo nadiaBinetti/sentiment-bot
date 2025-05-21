@@ -92,7 +92,7 @@ def get_latest_news(ticker, max_articles=3):
 def get_twitter_posts(ticker):
     url = "https://api.twitter.com/2/tweets/search/recent"
     headers = {
-        "Authorization": f"Bearer {TWITTER_BEARER_TOKEN}"
+        "Authorization": f"Bearer {BEARER_TOKEN}"
     }
     params = {
         "query": f"${ticker} -is:retweet lang:en",
@@ -185,11 +185,11 @@ if __name__ == "__main__":
 
     # Assicurati che il nome della variabile Python (es. TWITTER_BEARER_TOKEN)
     # corrisponda a come l'hai definita all'inizio dello script con os.environ.get()
-    if not TWITTER_BEARER_TOKEN:
-        print("ERRORE CRITICO: Secret 'TWITTER_BEARER_TOKEN' non trovato o vuoto!")
+    if not BEARER_TOKEN:
+        print("ERRORE CRITICO: Secret 'BEARER_TOKEN' non trovato o vuoto!")
         expected_secrets_present = False
     else:
-        print("Secret 'TWITTER_BEARER_TOKEN' caricato correttamente.")
+        print("Secret 'BEARER_TOKEN' caricato correttamente.")
 
     if not NEWS_API_KEY:
         print("ERRORE CRITICO: Secret 'NEWS_API_KEY' non trovato o vuoto!")
