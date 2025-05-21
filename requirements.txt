@@ -2,3 +2,4 @@ torch
 transformers
 requests
 praw
+huggingface_hub[hf_xet]
