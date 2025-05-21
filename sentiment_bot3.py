@@ -14,7 +14,7 @@ BOT_TOKEN = os.environ.get("BOT_TOKEN") # Sostituisci con il nome esatto del tuo
 CHAT_ID = os.environ.get("CHAT_ID")     # Sostituisci con il nome esatto del tuo secret su GitHub
 
 #TWITTER
-TWITTER_BEARER_TOKEN = os.environ.get("BEARER_TOKEN") # E così via per tutti...
+BEARER_TOKEN = os.environ.get("BEARER_TOKEN") # E così via per tutti...
 
 #NEWAPI
 NEWS_API_KEY = os.environ.get("NEWS_API_KEY")
