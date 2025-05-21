@@ -168,8 +168,8 @@ def combine_sentiments(news_sentiment, twitter_results, stocktwits_results, redd
 
 if __name__ == "__main__":
     if not BOT_TOKEN or not CHAT_ID: # Aggiungi tutti i tuoi secret qui
-    print("Errore: Uno o più secret non sono stati caricati correttamente dalle variabili d'ambiente.")
-    exit(1) # Esce dallo script se mancano i secret
+        print("Errore: Uno o più secret non sono stati caricati correttamente dalle variabili d'ambiente.")
+        exit(1) # Esce dallo script se mancano i secret
     
     full_report = "📊 Verdetto Giornaliero:\n\n"
     for ticker in TICKERS:
