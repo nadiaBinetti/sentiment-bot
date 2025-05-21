@@ -1,0 +1,26 @@
+name: Daily Sentiment Bot
+
+on:
+  schedule:
+    - cron: "0 8 * * *"  # ogni giorno alle 8:00 UTC
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install torch transformers praw requests
+
+      - name: Run script
+
+        run: python test_telegram.py
