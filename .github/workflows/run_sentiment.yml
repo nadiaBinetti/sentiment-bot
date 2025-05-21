@@ -1,23 +1,27 @@
-name: Run Sentiment Bot
+name: Daily Sentiment Bot
 
 on:
   schedule:
-    - cron: '0 */8 * * *'  # ogni 8 ore (UTC)
+    - cron: "0 8 * * *"  # ogni giorno alle 8:00 UTC
   workflow_dispatch:
 
 jobs:
-  run-sentiment-bot:
+  run:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          python-version: '3.9'
-      - run: |
-          python -m pip install --upgrade pip
-          pip install torch transformers requests praw
-      - run: python sentiment_bot3.py
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install torch transformers praw requests
+
+      - name: Run script
         env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           CHAT_ID: ${{ secrets.CHAT_ID }}
@@ -25,4 +29,5 @@ jobs:
           REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
           REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
           REDDIT_USER_AGENT: ${{ secrets.REDDIT_USER_AGENT }}
-          TWITTER_BEARER_TOKEN: ${{ secrets.TWITTER_BEARER_TOKEN }}
+          NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
+        run: python sentiment_bot3.py
