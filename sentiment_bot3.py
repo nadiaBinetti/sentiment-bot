@@ -41,8 +41,10 @@ STOCK_WEIGHT=0.2
 def send_telegram_message(message):
     url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
     payload = {"chat_id": CHAT_ID, "text": message}
-    requests.post(url, data=payload)
-
+    # Assegna il risultato della chiamata a 'response'
+    response = requests.post(url, data=payload)
+    # Ora puoi usare 'response'
+    print("Messaggio inviato a Telegram. Risposta:", response.status_code, response.text)
 # ========== MODELLI ==========
 
 # FinBERT per news
