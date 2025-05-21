@@ -167,9 +167,65 @@ def combine_sentiments(news_sentiment, twitter_results, stocktwits_results, redd
 # ========== MAIN ==========
 
 if __name__ == "__main__":
-    if not BOT_TOKEN or not CHAT_ID: # Aggiungi tutti i tuoi secret qui
-        print("Errore: Uno o più secret non sono stati caricati correttamente dalle variabili d'ambiente.")
+    print("Avvio controllo caricamento secret...") # Messaggio di inizio controllo
+
+    expected_secrets_present = True
+    # Controlla ogni secret individualmente
+    if not BOT_TOKEN:
+        print("ERRORE CRITICO: Secret 'BOT_TOKEN' non trovato o vuoto!")
+        expected_secrets_present = False
+    else:
+        print("Secret 'BOT_TOKEN' caricato correttamente.") # Conferma se trovato
+
+    if not CHAT_ID:
+        print("ERRORE CRITICO: Secret 'CHAT_ID' non trovato o vuoto!")
+        expected_secrets_present = False
+    else:
+        print("Secret 'CHAT_ID' caricato correttamente.")
+
+    # Assicurati che il nome della variabile Python (es. TWITTER_BEARER_TOKEN)
+    # corrisponda a come l'hai definita all'inizio dello script con os.environ.get()
+    if not TWITTER_BEARER_TOKEN:
+        print("ERRORE CRITICO: Secret 'TWITTER_BEARER_TOKEN' non trovato o vuoto!")
+        expected_secrets_present = False
+    else:
+        print("Secret 'TWITTER_BEARER_TOKEN' caricato correttamente.")
+
+    if not NEWS_API_KEY:
+        print("ERRORE CRITICO: Secret 'NEWS_API_KEY' non trovato o vuoto!")
+        expected_secrets_present = False
+    else:
+        print("Secret 'NEWS_API_KEY' caricato correttamente.")
+
+    if not REDDIT_CLIENT_ID:
+        print("ERRORE CRITICO: Secret 'REDDIT_CLIENT_ID' non trovato o vuoto!")
+        expected_secrets_present = False
+    else:
+        print("Secret 'REDDIT_CLIENT_ID' caricato correttamente.")
+
+    if not REDDIT_CLIENT_SECRET:
+        print("ERRORE CRITICO: Secret 'REDDIT_CLIENT_SECRET' non trovato o vuoto!")
+        expected_secrets_present = False
+    else:
+        print("Secret 'REDDIT_CLIENT_SECRET' caricato correttamente.")
+
+    if not REDDIT_USER_AGENT:
+        print("ERRORE CRITICO: Secret 'REDDIT_USER_AGENT' non trovato o vuoto!")
+        expected_secrets_present = False
+    else:
+        print("Secret 'REDDIT_USER_AGENT' caricato correttamente.")
+
+
+    if not expected_secrets_present:
+        # Questo è il messaggio generico che stai vedendo
+        print("--------------------------------------------------------------------------")
+        print("ERRORE FINALE: Uno o più secret necessari non sono stati caricati. Uscita.")
+        print("--------------------------------------------------------------------------")
         exit(1) # Esce dallo script se mancano i secret
+    
+    print("------------------------------------------------------")
+    print("TUTTI I SECRET NECESSARI SONO STATI CARICATI CON SUCCESSO.")
+    print("------------------------------------------------------")
     
     full_report = "📊 Verdetto Giornaliero:\n\n"
     for ticker in TICKERS:
