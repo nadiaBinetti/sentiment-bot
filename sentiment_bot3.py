@@ -7,21 +7,23 @@ from torch.nn.functional import softmax
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import requests
 import praw
-import os
 
 # ========== CONFIGURAZIONE ==========
 # Telegram bot
-BOT_TOKEN = os.getenv("BOT_TOKEN")
-CHAT_ID = os.getenv("CHAT_ID")
-#TWITTER
-TWITTER_BEARER_TOKEN = os.getenv("BEARER_TOKEN")
-# Reddit
-REDDIT_CLIENT_ID = os.getenv("REDDIT_CLIENT_ID")
-REDDIT_CLIENT_SECRET = os.getenv("REDDIT_CLIENT_SECRET")
-REDDIT_USER_AGENT = os.getenv("REDDIT_USER_AGENT")
-#NEWAPI
+BOT_TOKEN = "7257965363:AAG3moxIMxrge1v49YzTQ9MrDFFYUFAzHzc"
+CHAT_ID = "995803575"
 
-NEWS_API_KEY = os.getenv("NEWS_API_KEY")
+#TWITTER
+TWITTER_BEARER_TOKEN = "AAAAAAAAAAAAAAAAAAAAAOxb1wEAAAAAWSFpHnu4KhR%2Bx5oqMiHoEnQzsn8%3DKFCikTZHpo56XynKyZFIMAYV9G59NZbxWpuMXjhr1euktBvIu6"
+
+#NEWAPI
+NEWS_API_KEY = "c11008b9a27941a0a9fc44ef251f2442"
+
+# Reddit
+REDDIT_CLIENT_ID = "tv31rlX-jWi-3JgfMT3NJw"
+REDDIT_CLIENT_SECRET = "oLvQBlPeLE08DPNG1Zc5SuTr-4jqdQ"
+REDDIT_USER_AGENT = "sentiment-bot by /u/NADIA_reddit"
+
 
 # Tickers
 TICKERS = ["AAPL", "NVDA", "MSFT","SNAP","GOOG","AMZN","META","PST.MI","KO"]
@@ -40,7 +42,7 @@ def send_telegram_message(message):
     url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
     payload = {"chat_id": CHAT_ID, "text": message}
     requests.post(url, data=payload)
-    print("Telegram response:", response.status_code, response.text)
+
 # ========== MODELLI ==========
 
 # FinBERT per news
@@ -164,7 +166,6 @@ def combine_sentiments(news_sentiment, twitter_results, stocktwits_results, redd
 
 if __name__ == "__main__":
     full_report = "📊 Verdetto Giornaliero:\n\n"
-    print(f"BOT_TOKEN", BOT_TOKEN)
     for ticker in TICKERS:
         print(f"Analizzando {ticker}...")
 
@@ -249,5 +250,4 @@ if __name__ == "__main__":
         trending_report += report
 
     send_telegram_message(trending_report)
-
 
