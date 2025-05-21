@@ -1,7 +1,7 @@
 # Generating the full Python script including NewsAPI, Twitter, StockTwits, Reddit sentiment analysis,
 # with FinBERT and RoBERTa models, and Telegram integration.
 
-
+import os
 import torch
 from torch.nn.functional import softmax
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
@@ -10,19 +10,19 @@ import praw
 
 # ========== CONFIGURAZIONE ==========
 # Telegram bot
-BOT_TOKEN = "7257965363:AAG3moxIMxrge1v49YzTQ9MrDFFYUFAzHzc"
-CHAT_ID = "995803575"
+BOT_TOKEN = os.environ.get("BOT_TOKEN") # Sostituisci con il nome esatto del tuo secret su GitHub
+CHAT_ID = os.environ.get("CHAT_ID")     # Sostituisci con il nome esatto del tuo secret su GitHub
 
 #TWITTER
-TWITTER_BEARER_TOKEN = "AAAAAAAAAAAAAAAAAAAAAOxb1wEAAAAAWSFpHnu4KhR%2Bx5oqMiHoEnQzsn8%3DKFCikTZHpo56XynKyZFIMAYV9G59NZbxWpuMXjhr1euktBvIu6"
+TWITTER_BEARER_TOKEN = os.environ.get("BEARER_TOKEN") # E così via per tutti...
 
 #NEWAPI
-NEWS_API_KEY = "c11008b9a27941a0a9fc44ef251f2442"
+NEWS_API_KEY = os.environ.get("NEWS_API_KEY")
 
 # Reddit
-REDDIT_CLIENT_ID = "tv31rlX-jWi-3JgfMT3NJw"
-REDDIT_CLIENT_SECRET = "oLvQBlPeLE08DPNG1Zc5SuTr-4jqdQ"
-REDDIT_USER_AGENT = "sentiment-bot by /u/NADIA_reddit"
+REDDIT_CLIENT_ID = os.environ.get("REDDIT_CLIENT_ID")
+REDDIT_CLIENT_SECRET = os.environ.get("REDDIT_CLIENT_SECRET")
+REDDIT_USER_AGENT = os.environ.get("REDDIT_USER_AGENT")
 
 
 # Tickers
@@ -165,6 +165,10 @@ def combine_sentiments(news_sentiment, twitter_results, stocktwits_results, redd
 # ========== MAIN ==========
 
 if __name__ == "__main__":
+    if not BOT_TOKEN or not CHAT_ID: # Aggiungi tutti i tuoi secret qui
+    print("Errore: Uno o più secret non sono stati caricati correttamente dalle variabili d'ambiente.")
+    exit(1) # Esce dallo script se mancano i secret
+    
     full_report = "📊 Verdetto Giornaliero:\n\n"
     for ticker in TICKERS:
         print(f"Analizzando {ticker}...")
